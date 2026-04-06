@@ -2,9 +2,12 @@ package com.joaoguilhermee.MedLembrete.Controller;
 
 import com.joaoguilhermee.MedLembrete.Model.User;
 import com.joaoguilhermee.MedLembrete.Service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -13,9 +16,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // POST /usuarios
+    // POST /users
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@RequestBody @Valid User user) {
         return ResponseEntity.ok(userService.createUser(user));
     }
 
@@ -28,13 +31,19 @@ public class UserController {
     // PUT
     @PutMapping("/{userId}")
     public ResponseEntity<User> update(@PathVariable Long userId,
-                                          @RequestBody User user) {
+                                          @RequestBody @Valid User user) {
         return ResponseEntity.ok(userService.updateUser(userId, user));
     }
 
     // DESATIVAR
     @PatchMapping("/{userId}/desativar")
-    public ResponseEntity<User> desativar(@PathVariable Long userId) {
+    public ResponseEntity<User> disable(@PathVariable Long userId) {
         return ResponseEntity.ok(userService.disableUser(userId));
+    }
+
+    // GET / LISTAR TODOS
+    @GetMapping
+    public ResponseEntity<List<User>> listarTodos() {
+        return ResponseEntity.ok(userService.listarUsuarios());
     }
 }

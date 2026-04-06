@@ -6,6 +6,8 @@ import com.joaoguilhermee.MedLembrete.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -37,6 +39,10 @@ public class UserService {
 
         user.setAtivo(false);
         return userRepository.save(user);
+    }
+
+    public List<User> listarUsuarios() {
+        return userRepository.findAll();
     }
 
 }
