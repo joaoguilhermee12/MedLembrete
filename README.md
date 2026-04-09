@@ -141,7 +141,6 @@ E-mail: admin@medLembrete.com
 Senha:  admin123
 ```
 
-> ⚠️ Recomenda-se alterar a senha do admin após o primeiro acesso.
 
 ## 📖 Documentação da API (Swagger)
 
