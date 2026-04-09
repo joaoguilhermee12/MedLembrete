@@ -31,6 +31,7 @@ public class User {
     private String nome;
 
     @JsonProperty("CPF")
+    @Column(unique = true)
     @Pattern(regexp = "\\d{11}", message = "CPF deve conter 11 dígitos numéricos")
     @NotBlank(message = "CPF é obrigatório")
     private String CPF;
