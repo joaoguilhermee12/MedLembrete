@@ -35,15 +35,31 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(userId, user));
     }
 
-    // DESATIVAR
-    @PatchMapping("/{userId}/desativar")
-    public ResponseEntity<User> disable(@PathVariable Long userId) {
-        return ResponseEntity.ok(userService.disableUser(userId));
-    }
+
 
     // GET / LISTAR TODOS
     @GetMapping
     public ResponseEntity<List<User>> listarTodos() {
         return ResponseEntity.ok(userService.listarUsuarios());
+    }
+
+    // ADMIN
+    @PatchMapping("/{userId}/desativar")
+    public ResponseEntity<User> desativar(@RequestParam Long adminId,
+                                          @PathVariable Long userId) {
+        return ResponseEntity.ok(userService.desativarUsuario(adminId, userId));
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deletar(@RequestParam Long adminId,
+                                        @PathVariable Long userId) {
+        userService.deletarUsuario(adminId, userId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{userId}/reactivate")
+    public ResponseEntity<User> reativar(@RequestParam Long adminId,
+                                         @PathVariable Long userId) {
+        return ResponseEntity.ok(userService.reativarUsuario(adminId, userId));
     }
 }

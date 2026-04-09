@@ -56,7 +56,12 @@ public class MedicineService {
         Medicine medicine = medicineRepository.findByIdAndUserId(medicineId, userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Medicamento", medicineId));
 
-        medicine.setTomado(true);
+        if (medicine.getDosesTomadas() < medicine.getDosesPorDia()) {
+            medicine.setDosesTomadas(medicine.getDosesTomadas() + 1);
+        } else {
+            throw new RuntimeException("Todas as doses do dia já foram tomadas!");
+        }
+
         return medicineRepository.save(medicine);
     }
 }

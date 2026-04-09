@@ -41,7 +41,7 @@ public class MedicineController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{medicineId}/tomado")
+    @PatchMapping("/{medicineId}/dosesTomadas")
     public ResponseEntity<Medicine> markTaken(@PathVariable Long userId,
                                                  @PathVariable Long medicineId) {
         return ResponseEntity.ok(medicineService.marcarComoTomado(userId, medicineId));

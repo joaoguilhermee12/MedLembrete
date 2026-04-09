@@ -1,6 +1,7 @@
 package com.joaoguilhermee.MedLembrete.Service;
 
 import com.joaoguilhermee.MedLembrete.Exception.ResourceNotFoundException;
+import com.joaoguilhermee.MedLembrete.Model.Role;
 import com.joaoguilhermee.MedLembrete.Model.User;
 import com.joaoguilhermee.MedLembrete.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,4 +46,34 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    private void validarAdmin(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário", userId));
+        if (user.getRole() != Role.ADMIN) {
+            throw new RuntimeException("Acesso negado: apenas ADMIN pode realizar esta ação");
+        }
+    }
+
+    public User desativarUsuario(Long adminId, Long userId) {
+        validarAdmin(adminId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário", userId));
+        user.setAtivo(false);
+        return userRepository.save(user);
+    }
+
+    public void deletarUsuario(Long adminId, Long userId) {
+        validarAdmin(adminId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário", userId));
+        userRepository.delete(user);
+    }
+
+    public User reativarUsuario(Long adminId, Long userId) {
+        validarAdmin(adminId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário", userId));
+        user.setAtivo(true);
+        return userRepository.save(user);
+    }
 }

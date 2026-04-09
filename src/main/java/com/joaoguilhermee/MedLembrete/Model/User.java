@@ -1,14 +1,19 @@
 package com.joaoguilhermee.MedLembrete.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.joaoguilhermee.MedLembrete.Model.Role;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +32,8 @@ public class User {
     @NotBlank(message = "Nome é obrigatório")
     private String nome;
 
+
+    @Pattern(regexp = "\\d{11}", message = "CPF deve conter 11 digitos numéricos.")
     @NotBlank(message = "CPF é obrigatório")
     private String CPF;
 
@@ -34,7 +41,8 @@ public class User {
     @NotBlank(message = "Email é obrigatório")
     private String email;
 
-    @NotBlank(message = "Senha é obrigatória")
+    @Size(min = 6, message = "Senha deve ter pelo menos 6 caracteres")
+    @NotBlank(message = "Senha é obrigatória.")
     private String senha;
 
     private Boolean ativo = true;
@@ -42,4 +50,9 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Medicine> medicines = new ArrayList<>();
+
+    @JsonIgnore
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
+
 }

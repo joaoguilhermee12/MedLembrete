@@ -1,6 +1,8 @@
 package com.joaoguilhermee.MedLembrete.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.joaoguilhermee.MedLembrete.Model.DTO.UserSummaryDTO;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,6 +22,7 @@ public class Medicine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @NotBlank(message = "Nome do medicamento é obrigatório")
     private String nome;
 
@@ -38,10 +41,17 @@ public class Medicine {
     @NotNull(message = "Doses por dia é obrigatório")
     private Integer dosesPorDia;
 
-    private boolean tomado = false;
+    private Integer dosesTomadas = 0;
 
+    @JsonIgnore
+    @Schema(hidden = true)
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnoreProperties({"email", "senha", "CPF", "ativo"})
     private User user;
+
+    @Schema(implementation = UserSummaryDTO.class)
+    public UserSummaryDTO getUserDTO() {
+        if (user == null) return null;
+        return new UserSummaryDTO(user.getId(), user.getNome());
+    }
 }
