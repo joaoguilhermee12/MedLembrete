@@ -104,7 +104,7 @@ cd MedLembrete
 Crie o banco de dados no PostgreSQL:
 
 ```sql
-CREATE DATABASE membres;
+CREATE DATABASE "medLembrete";
 ```
 
 ### 3. Configure as credenciais
@@ -112,7 +112,7 @@ CREATE DATABASE membres;
 Edite o arquivo `src/main/resources/application.properties`:
 
 ```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/membres
+spring.datasource.url=jdbc:postgresql://localhost:5432/medLembrete
 spring.datasource.username=seu_usuario
 spring.datasource.password=sua_senha
 spring.jpa.hibernate.ddl-auto=update
