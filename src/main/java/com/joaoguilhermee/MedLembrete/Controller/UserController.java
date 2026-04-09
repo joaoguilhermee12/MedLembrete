@@ -16,50 +16,44 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // POST /users
+    // POST / CRIAR USUÁRIO
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody @Valid User user) {
         return ResponseEntity.ok(userService.createUser(user));
     }
-
-    // GET
+    // GET / LISTAR USUÁRIO PELO ID
     @GetMapping("/{userId}")
-    public ResponseEntity<User> search(@PathVariable Long userId) {
+    public ResponseEntity<User> searchUser(@PathVariable Long userId) {
         return ResponseEntity.ok(userService.searchUser(userId));
     }
-
-    // PUT
+    // PUT / ATUALIZAR USUÁRIO
     @PutMapping("/{userId}")
-    public ResponseEntity<User> update(@PathVariable Long userId,
-                                          @RequestBody @Valid User user) {
+    public ResponseEntity<User> updateUser(@PathVariable Long userId,
+                                           @RequestBody @Valid User user) {
         return ResponseEntity.ok(userService.updateUser(userId, user));
     }
-
-
-
-    // GET / LISTAR TODOS
+    // GET / LISTAR TODOS USUÁRIOS
     @GetMapping
-    public ResponseEntity<List<User>> listarTodos() {
-        return ResponseEntity.ok(userService.listarUsuarios());
+    public ResponseEntity<List<User>> listUsers() {
+        return ResponseEntity.ok(userService.listUsers());
     }
-
-    // ADMIN
-    @PatchMapping("/{userId}/desativar")
-    public ResponseEntity<User> desativar(@RequestParam Long adminId,
-                                          @PathVariable Long userId) {
-        return ResponseEntity.ok(userService.desativarUsuario(adminId, userId));
+    // PATCH / DESATIVAR USUÁRIO
+    @PatchMapping("/{userId}/disable")
+    public ResponseEntity<User> disableUser(@RequestParam Long adminId,
+                                            @PathVariable Long userId) {
+        return ResponseEntity.ok(userService.disableUser(adminId, userId));
     }
-
+    // DELETE / EXCLUIR USUÁRIO
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deletar(@RequestParam Long adminId,
-                                        @PathVariable Long userId) {
-        userService.deletarUsuario(adminId, userId);
+    public ResponseEntity<Void> deleteUser(@RequestParam Long adminId,
+                                           @PathVariable Long userId) {
+        userService.deleteUser(adminId, userId);
         return ResponseEntity.noContent().build();
     }
-
-    @PatchMapping("/{userId}/reactivate")
-    public ResponseEntity<User> reativar(@RequestParam Long adminId,
-                                         @PathVariable Long userId) {
-        return ResponseEntity.ok(userService.reativarUsuario(adminId, userId));
+    // PATCH / REATIVAR USUÁRIO
+    @PatchMapping("/{userId}/enable")
+    public ResponseEntity<User> enableUser(@RequestParam Long adminId,
+                                           @PathVariable Long userId) {
+        return ResponseEntity.ok(userService.enableUser(adminId, userId));
     }
 }

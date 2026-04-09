@@ -2,7 +2,6 @@ package com.joaoguilhermee.MedLembrete.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -13,7 +12,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import com.joaoguilhermee.MedLembrete.Model.Role;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +30,8 @@ public class User {
     @NotBlank(message = "Nome é obrigatório")
     private String nome;
 
-
-    @Pattern(regexp = "\\d{11}", message = "CPF deve conter 11 digitos numéricos.")
+    @JsonProperty("CPF")
+    @Pattern(regexp = "\\d{11}", message = "CPF deve conter 11 dígitos numéricos")
     @NotBlank(message = "CPF é obrigatório")
     private String CPF;
 
@@ -42,7 +40,7 @@ public class User {
     private String email;
 
     @Size(min = 6, message = "Senha deve ter pelo menos 6 caracteres")
-    @NotBlank(message = "Senha é obrigatória.")
+    @NotBlank(message = "Senha é obrigatória")
     private String senha;
 
     private Boolean ativo = true;
@@ -54,5 +52,4 @@ public class User {
     @JsonIgnore
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
-
 }

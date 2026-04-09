@@ -19,7 +19,7 @@ public class MedicineService {
     @Autowired
     private UserRepository userRepository;
 
-    public Medicine adicionarMedicamento(Long userId, Medicine medicine) {
+    public Medicine addMedicine(Long userId, Medicine medicine) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário", userId));
 
@@ -27,32 +27,32 @@ public class MedicineService {
         return medicineRepository.save(medicine);
     }
 
-    public List<Medicine> listarMedicamentos(Long userId) {
+    public List<Medicine> listMedicines(Long userId) {
         return medicineRepository.findByUserId(userId);
     }
 
-    public Medicine atualizarMedicamento(Long userId, Long medicineId, Medicine dadosNovos) {
+    public Medicine updateMedicine(Long userId, Long medicineId, Medicine newData) {
         Medicine medicine = medicineRepository.findByIdAndUserId(medicineId, userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Medicamento", medicineId));
 
-        medicine.setNome(dadosNovos.getNome());
-        medicine.setHorario(dadosNovos.getHorario());
-        medicine.setDiaInicio(dadosNovos.getDiaInicio());
-        medicine.setDiaFinal(dadosNovos.getDiaFinal());
-        medicine.setDoses(dadosNovos.getDoses());
-        medicine.setDosesPorDia(dadosNovos.getDosesPorDia());
+        medicine.setNome(newData.getNome());
+        medicine.setHorario(newData.getHorario());
+        medicine.setDiaInicio(newData.getDiaInicio());
+        medicine.setDiaFinal(newData.getDiaFinal());
+        medicine.setDoses(newData.getDoses());
+        medicine.setDosesPorDia(newData.getDosesPorDia());
 
         return medicineRepository.save(medicine);
     }
 
-    public void excluirMedicamento(Long userId, Long medicineId) {
+    public void deleteMedicine(Long userId, Long medicineId) {
         Medicine medicine = medicineRepository.findByIdAndUserId(medicineId, userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Medicamento", medicineId));
 
         medicineRepository.delete(medicine);
     }
 
-    public Medicine marcarComoTomado(Long userId, Long medicineId) {
+    public Medicine markDoseTaken(Long userId, Long medicineId) {
         Medicine medicine = medicineRepository.findByIdAndUserId(medicineId, userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Medicamento", medicineId));
 

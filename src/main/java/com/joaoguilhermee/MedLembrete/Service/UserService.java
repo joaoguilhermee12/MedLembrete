@@ -23,54 +23,48 @@ public class UserService {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário", userId));
     }
-    public User updateUser(Long userId, User dadosNovos) {
+
+    public User updateUser(Long userId, User newData) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário", userId));
 
-        user.setNome(dadosNovos.getNome());
-        user.setEmail(dadosNovos.getEmail());
-        user.setSenha(dadosNovos.getSenha());
-        user.setCPF(dadosNovos.getCPF());
+        user.setNome(newData.getNome());
+        user.setEmail(newData.getEmail());
+        user.setSenha(newData.getSenha());
+        user.setCPF(newData.getCPF());
 
         return userRepository.save(user);
     }
-    public User disableUser(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário", userId));
 
-        user.setAtivo(false);
-        return userRepository.save(user);
-    }
-
-    public List<User> listarUsuarios() {
+    public List<User> listUsers() {
         return userRepository.findAll();
     }
 
-    private void validarAdmin(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário", userId));
+    private void validateAdmin(Long adminId) {
+        User user = userRepository.findById(adminId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário", adminId));
         if (user.getRole() != Role.ADMIN) {
             throw new RuntimeException("Acesso negado: apenas ADMIN pode realizar esta ação");
         }
     }
 
-    public User desativarUsuario(Long adminId, Long userId) {
-        validarAdmin(adminId);
+    public User disableUser(Long adminId, Long userId) {
+        validateAdmin(adminId);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário", userId));
         user.setAtivo(false);
         return userRepository.save(user);
     }
 
-    public void deletarUsuario(Long adminId, Long userId) {
-        validarAdmin(adminId);
+    public void deleteUser(Long adminId, Long userId) {
+        validateAdmin(adminId);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário", userId));
         userRepository.delete(user);
     }
 
-    public User reativarUsuario(Long adminId, Long userId) {
-        validarAdmin(adminId);
+    public User enableUser(Long adminId, Long userId) {
+        validateAdmin(adminId);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário", userId));
         user.setAtivo(true);

@@ -10,40 +10,41 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users/{userId}/medicamentos")
+@RequestMapping("/users/{userId}/medicines")
 public class MedicineController {
 
     @Autowired
     private MedicineService medicineService;
 
+    // POST / ADICIONAR MEDICAMENTO
     @PostMapping
-    public ResponseEntity<Medicine> add(@PathVariable Long userId,
-                                              @RequestBody @Valid Medicine medicine) {
-        return ResponseEntity.ok(medicineService.adicionarMedicamento(userId, medicine));
+    public ResponseEntity<Medicine> addMedicine(@PathVariable Long userId,
+                                                @RequestBody @Valid Medicine medicine) {
+        return ResponseEntity.ok(medicineService.addMedicine(userId, medicine));
     }
-
+    // GET / LISTAR MEDICAMENTOS DO USUÁRIO
     @GetMapping
-    public ResponseEntity<List<Medicine>> list(@PathVariable Long userId) {
-        return ResponseEntity.ok(medicineService.listarMedicamentos(userId));
+    public ResponseEntity<List<Medicine>> listMedicines(@PathVariable Long userId) {
+        return ResponseEntity.ok(medicineService.listMedicines(userId));
     }
-
+    // PUT / ATUALIZAR MEDICAMENTO
     @PutMapping("/{medicineId}")
-    public ResponseEntity<Medicine> update(@PathVariable Long userId,
-                                              @PathVariable Long medicineId,
-                                              @RequestBody Medicine medicine) {
-        return ResponseEntity.ok(medicineService.atualizarMedicamento(userId, medicineId, medicine));
+    public ResponseEntity<Medicine> updateMedicine(@PathVariable Long userId,
+                                                   @PathVariable Long medicineId,
+                                                   @RequestBody @Valid Medicine medicine) {
+        return ResponseEntity.ok(medicineService.updateMedicine(userId, medicineId, medicine));
     }
-
+    // DELETE / EXCLUIR MEDICAMENTO
     @DeleteMapping("/{medicineId}")
-    public ResponseEntity<Void> delete(@PathVariable Long userId,
-                                        @PathVariable Long medicineId) {
-        medicineService.excluirMedicamento(userId, medicineId);
+    public ResponseEntity<Void> deleteMedicine(@PathVariable Long userId,
+                                               @PathVariable Long medicineId) {
+        medicineService.deleteMedicine(userId, medicineId);
         return ResponseEntity.noContent().build();
     }
-
-    @PatchMapping("/{medicineId}/dosesTomadas")
-    public ResponseEntity<Medicine> markTaken(@PathVariable Long userId,
-                                                 @PathVariable Long medicineId) {
-        return ResponseEntity.ok(medicineService.marcarComoTomado(userId, medicineId));
+    // PATCH / DOSE TOMADA
+    @PatchMapping("/{medicineId}/taken")
+    public ResponseEntity<Medicine> markDoseTaken(@PathVariable Long userId,
+                                                  @PathVariable Long medicineId) {
+        return ResponseEntity.ok(medicineService.markDoseTaken(userId, medicineId));
     }
 }
