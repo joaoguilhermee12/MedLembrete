@@ -1,5 +1,6 @@
 package com.joaoguilhermee.MedLembrete.Controller;
 
+import com.joaoguilhermee.MedLembrete.Model.DTO.UserStatusDTO;
 import com.joaoguilhermee.MedLembrete.Model.User;
 import com.joaoguilhermee.MedLembrete.Service.UserService;
 import jakarta.validation.Valid;
@@ -37,12 +38,7 @@ public class UserController {
     public ResponseEntity<List<User>> listUsers() {
         return ResponseEntity.ok(userService.listUsers());
     }
-    // PATCH / DESATIVAR USUÁRIO
-    @PatchMapping("/{userId}/disable")
-    public ResponseEntity<User> disableUser(@RequestParam Long adminId,
-                                            @PathVariable Long userId) {
-        return ResponseEntity.ok(userService.disableUser(adminId, userId));
-    }
+
     // DELETE / EXCLUIR USUÁRIO
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser(@RequestParam Long adminId,
@@ -50,10 +46,16 @@ public class UserController {
         userService.deleteUser(adminId, userId);
         return ResponseEntity.noContent().build();
     }
+    // PATCH / DESATIVAR USUÁRIO
+    @PatchMapping("/{userId}/disable")
+    public ResponseEntity<UserStatusDTO> disableUser(@RequestParam Long adminId,
+                                                     @PathVariable Long userId) {
+        return ResponseEntity.ok(userService.disableUser(adminId, userId));
+    }
     // PATCH / REATIVAR USUÁRIO
     @PatchMapping("/{userId}/enable")
-    public ResponseEntity<User> enableUser(@RequestParam Long adminId,
-                                           @PathVariable Long userId) {
+    public ResponseEntity<UserStatusDTO> enableUser(@RequestParam Long adminId,
+                                                    @PathVariable Long userId) {
         return ResponseEntity.ok(userService.enableUser(adminId, userId));
     }
 }

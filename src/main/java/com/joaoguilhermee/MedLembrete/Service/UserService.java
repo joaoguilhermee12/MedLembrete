@@ -1,6 +1,7 @@
 package com.joaoguilhermee.MedLembrete.Service;
 
 import com.joaoguilhermee.MedLembrete.Exception.ResourceNotFoundException;
+import com.joaoguilhermee.MedLembrete.Model.DTO.UserStatusDTO;
 import com.joaoguilhermee.MedLembrete.Model.Role;
 import com.joaoguilhermee.MedLembrete.Model.User;
 import com.joaoguilhermee.MedLembrete.Repository.UserRepository;
@@ -48,12 +49,13 @@ public class UserService {
         }
     }
 
-    public User disableUser(Long adminId, Long userId) {
+    public UserStatusDTO disableUser(Long adminId, Long userId) {
         validateAdmin(adminId);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário", userId));
         user.setAtivo(false);
-        return userRepository.save(user);
+        userRepository.save(user);
+        return new UserStatusDTO(user.getId(), user.getNome(), user.getAtivo());
     }
 
     public void deleteUser(Long adminId, Long userId) {
@@ -63,11 +65,13 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    public User enableUser(Long adminId, Long userId) {
+
+    public UserStatusDTO enableUser(Long adminId, Long userId) {
         validateAdmin(adminId);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário", userId));
         user.setAtivo(true);
-        return userRepository.save(user);
+        userRepository.save(user);
+        return new UserStatusDTO(user.getId(), user.getNome(), user.getAtivo());
     }
 }
