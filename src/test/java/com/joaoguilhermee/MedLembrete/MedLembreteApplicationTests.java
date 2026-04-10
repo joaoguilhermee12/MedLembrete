@@ -46,5 +46,26 @@ class MedLembreteApplicationTests {
 		assertEquals("joao@email.com", saved.getEmail());
 		System.out.println("Usuário criado com sucesso! ID gerado: " + saved.getId());
 	}
+	// TESTE 2 - ENTRADA INVÁLIDA
+	// Verifica se o sistema rejeita um usuário com CPF duplicado
+	@Test
+	void shouldNotAllowDuplicateCPF() {
+		User user1 = new User();
+		user1.setNome("Usuário Um");
+		user1.setEmail("user1@email.com");
+		user1.setSenha("123456");
+		user1.setCpf("11122233344");
+		userRepository.save(user1);
 
+		User user2 = new User();
+		user2.setNome("Usuário Dois");
+		user2.setEmail("user2@email.com");
+		user2.setSenha("123456");
+		user2.setCpf("11122233344");
+
+		assertThrows(Exception.class, () -> {
+			userRepository.saveAndFlush(user2);
+		});
+		System.out.println("Sistema bloqueou CPF duplicado corretamente!");
+	}
 }
