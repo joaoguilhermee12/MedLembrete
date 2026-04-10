@@ -31,7 +31,7 @@ public class UserService {
         user.setNome(newData.getNome());
         user.setEmail(newData.getEmail());
         user.setSenha(newData.getSenha());
-        user.setCPF(newData.getCPF());
+        user.setCpf(newData.getCpf());
 
         return userRepository.save(user);
     }

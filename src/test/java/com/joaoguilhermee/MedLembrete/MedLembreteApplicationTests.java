@@ -37,7 +37,7 @@ class MedLembreteApplicationTests {
 		user.setNome("João Silva");
 		user.setEmail("joao@email.com");
 		user.setSenha("123456");
-		user.setCPF("98765432100");
+		user.setCpf("98765432100");
 
 		User saved = userRepository.save(user);
 
@@ -46,4 +46,5 @@ class MedLembreteApplicationTests {
 		assertEquals("joao@email.com", saved.getEmail());
 		System.out.println("Usuário criado com sucesso! ID gerado: " + saved.getId());
 	}
+
 }

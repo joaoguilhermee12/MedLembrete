@@ -2,6 +2,7 @@ package com.joaoguilhermee.MedLembrete.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -34,7 +35,7 @@ public class User {
     @Column(unique = true)
     @Pattern(regexp = "\\d{11}", message = "CPF deve conter 11 dígitos numéricos")
     @NotBlank(message = "CPF é obrigatório")
-    private String CPF;
+    private String cpf;
 
     @Email(message = "Email inválido")
     @NotBlank(message = "Email é obrigatório")
@@ -43,7 +44,7 @@ public class User {
     @Size(min = 6, message = "Senha deve ter pelo menos 6 caracteres")
     @NotBlank(message = "Senha é obrigatória")
     private String senha;
-
+    @JsonIgnore
     private Boolean ativo = true;
 
     @JsonIgnore

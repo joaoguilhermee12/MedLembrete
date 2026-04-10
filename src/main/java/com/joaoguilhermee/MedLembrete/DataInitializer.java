@@ -22,7 +22,7 @@ public class DataInitializer implements CommandLineRunner {
             admin.setNome("Admin");
             admin.setEmail("admin@medLembrete.com");
             admin.setSenha("admin123");
-            admin.setCPF("12345678901");
+            admin.setCpf("12345678901");
             admin.setRole(Role.ADMIN);
             userRepository.save(admin);
         }
