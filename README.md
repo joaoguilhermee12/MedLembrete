@@ -4,6 +4,7 @@
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.13-brightgreen)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue)
 ![Version](https://img.shields.io/badge/version-1.0.0-informational)
+![Java CI with Maven](https://github.com/joaoguilhermee12/MedLembrete/actions/workflows/maven.yml/badge.svg)
 
 ## 📋 Descrição do Problema Real
 
