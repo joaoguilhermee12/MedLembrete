@@ -68,4 +68,36 @@ class MedLembreteApplicationTests {
 		});
 		System.out.println("Sistema bloqueou CPF duplicado corretamente!");
 	}
+	// TESTE 3 - CASO LIMITE
+// Verifica se o sistema bloqueia marcar mais doses do que o permitido por dia
+	@Test
+	void shouldNotAllowMoreDosesThanAllowed() {
+		User user = new User();
+		user.setNome("Teste Doses");
+		user.setEmail("doses@email.com");
+		user.setSenha("123456");
+		user.setCpf("55566677788");
+		userRepository.save(user);
+
+		Medicine medicine = new Medicine();
+		medicine.setNome("Paracetamol");
+		medicine.setHorario("08:00");
+		medicine.setDiaInicio(java.time.LocalDate.now());
+		medicine.setDiaFinal(java.time.LocalDate.now().plusDays(7));
+		medicine.setDoses(1);
+		medicine.setDosesPorDia(1);
+		medicine.setUser(user);
+		medicineRepository.save(medicine);
+
+		// Primeira dose - deve funcionar e incrementar para 1
+		Medicine after1 = medicineService.markDoseTaken(user.getId(), medicine.getId());
+		assertEquals(1, after1.getDosesTomadas());
+
+		// Segunda dose - deve lançar exceção pois já atingiu o limite
+		RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+			medicineService.markDoseTaken(user.getId(), medicine.getId());
+		});
+		System.out.println("Mensagem retornada: " + ex.getMessage());
+		assertEquals("Todas as doses do dia já foram tomadas!", ex.getMessage());
+	}
 }
