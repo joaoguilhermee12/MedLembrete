@@ -1,6 +1,7 @@
 package com.joaoguilhermee.MedLembrete.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
@@ -31,11 +32,20 @@ public class User {
     @NotBlank(message = "Nome é obrigatório")
     private String nome;
 
+    @JsonIgnore
     @JsonProperty("CPF")
     @Column(unique = true)
     @Pattern(regexp = "\\d{11}", message = "CPF deve conter 11 dígitos numéricos")
     @NotBlank(message = "CPF é obrigatório")
     private String cpf;
+    @JsonProperty("CPF")
+    public String getCpf() {
+        return cpf;
+    }
+    @JsonProperty("CPF")
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 
     @Email(message = "Email inválido")
     @NotBlank(message = "Email é obrigatório")

@@ -1,6 +1,7 @@
 package com.joaoguilhermee.MedLembrete.Handler;
 
 import com.joaoguilhermee.MedLembrete.Exception.ResourceNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -30,5 +31,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<String> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+        if (ex.getMessage().contains("cpf")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("CPF já cadastrado no sistema!");
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Dados duplicados!");
     }
 }
