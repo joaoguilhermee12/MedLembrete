@@ -161,8 +161,8 @@ http://localhost:8080/swagger-ui/index.html
 | GET | /users/{id} | Buscar usuário por ID | Público |
 | PUT | /users/{id} | Atualizar usuário | Público |
 | DELETE | /users/{id}?adminId={id} | Excluir usuário | ADMIN |
-| PATCH | /users/{id}/deactivate?adminId={id} | Desativar usuário | ADMIN |
-| PATCH | /users/{id}/reactivate?adminId={id} | Reativar usuário | ADMIN |
+| PATCH | /users/{id}/disable?adminId={id} | Desativar usuário | ADMIN |
+| PATCH | /users/{id}/enable?adminId={id} | Reativar usuário | ADMIN |
 
 #### Medicamentos
 | Método | Rota | Descrição |
@@ -207,7 +207,7 @@ Cada chamada incrementa `dosesTomadas` em +1. Quando `dosesTomadas == dosesPorDi
 
 #### Desativar usuário (apenas ADMIN)
 ```
-PATCH /users/2/deactivate?adminId=7
+PATCH /users/2/disable?adminId=7
 ```
 
 ## 🧪 Instruções para Rodar os Testes
