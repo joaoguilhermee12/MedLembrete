@@ -5,6 +5,7 @@ import com.joaoguilhermee.MedLembrete.Model.DTO.UserStatusDTO;
 import com.joaoguilhermee.MedLembrete.Model.Role;
 import com.joaoguilhermee.MedLembrete.Model.User;
 import com.joaoguilhermee.MedLembrete.Repository.UserRepository;
+import com.joaoguilhermee.MedLembrete.Service.External.EmailValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,13 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private EmailValidationService emailValidationService;
+
     public User createUser(User user) {
+        if (!emailValidationService.isEmailValid(user.getEmail())) {
+            throw new RuntimeException("Email inválido ou descartável.");
+        }
         return userRepository.save(user);
     }
 
@@ -64,7 +71,6 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário", userId));
         userRepository.delete(user);
     }
-
 
     public UserStatusDTO enableUser(Long adminId, Long userId) {
         validateAdmin(adminId);

@@ -3,6 +3,7 @@ package com.joaoguilhermee.MedLembrete;
 import com.joaoguilhermee.MedLembrete.Model.User;
 import com.joaoguilhermee.MedLembrete.Repository.MedicineRepository;
 import com.joaoguilhermee.MedLembrete.Repository.UserRepository;
+import com.joaoguilhermee.MedLembrete.Service.External.EmailValidationService;
 import com.joaoguilhermee.MedLembrete.Service.MedicineService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,5 +100,21 @@ class MedLembreteApplicationTests {
 		});
 		System.out.println("Mensagem retornada: " + ex.getMessage());
 		assertEquals("Todas as doses do dia já foram tomadas!", ex.getMessage());
+	}
+	@SpringBootTest
+	class EmailValidationTest {
+
+		@Autowired
+		private EmailValidationService emailValidationService;
+
+		@Test
+		void deveValidarEmailReal() {
+			assertTrue(emailValidationService.isEmailValid("contato@google.com"));
+		}
+
+		@Test
+		void deveRejeitarEmailFalso() {
+			assertFalse(emailValidationService.isEmailValid("email-errado-sem-at"));
+		}
 	}
 }
