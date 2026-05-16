@@ -6,6 +6,15 @@
 ![Version](https://img.shields.io/badge/version-1.0.0-informational)
 ![Java CI with Maven](https://github.com/joaoguilhermee12/MedLembrete/actions/workflows/maven.yml/badge.svg)
 
+## 🌐 Aplicação em Produção
+
+> Acesse a aplicação publicada e interaja com a API diretamente pelo Swagger:
+
+**👉 [https://medlembrete.onrender.com/swagger-ui/index.html](https://medlembrete.onrender.com/swagger-ui/index.html#/)**
+
+> ⚠️ A aplicação está hospedada no Render (plano gratuito). Na primeira requisição pode haver um tempo de espera de até 1 minuto enquanto o servidor inicializa.
+
+
 ## 📋 Descrição do Problema Real
 
 O esquecimento de medicamentos é um problema sério que afeta milhões de pessoas, especialmente idosos e pacientes com doenças crônicas. A falta de controle sobre horários, doses e duração do tratamento pode causar complicações graves à saúde, reinternações hospitalares e piora de doenças. Muitos pacientes tomam múltiplos medicamentos por dia e não possuem uma forma organizada de acompanhar seu tratamento.
