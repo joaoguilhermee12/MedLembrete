@@ -2,15 +2,11 @@ package com.joaoguilhermee.MedLembrete;
 
 import com.joaoguilhermee.MedLembrete.Service.External.EmailValidationService;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
 class EmailValidationTest {
 
-    @Autowired
-    private EmailValidationService emailValidationService;
+    private final EmailValidationService emailValidationService = new EmailValidationService();
 
     @Test
     void deveValidarEmailReal() {
